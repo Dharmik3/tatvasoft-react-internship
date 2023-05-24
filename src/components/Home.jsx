@@ -8,8 +8,8 @@ const Home = () => {
 
       <div style={{ display: "flex", gap:"1rem"}}>
         <Button
-          variant="outlined"
-          color="primary"
+          variant="contained"
+          color="secondary"
           size="large"
           onClick={() => setCounter(counter + 1)}
         >
@@ -17,8 +17,8 @@ const Home = () => {
         </Button>
         <Typography variant="h3">{counter}</Typography>
         <Button
-          variant="outlined"
-          color="primary"
+          variant="contained"
+          color="secondary"
           size="large"
           onClick={() => setCounter(counter - 1)}
         >

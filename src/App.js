@@ -2,25 +2,25 @@ import { BrowserRouter, Route ,Routes,Link} from 'react-router-dom';
 import './App.css';
 import Admin from './components/Admin';
 import User from './components/User';
-import Home from './components/Home';
+import Form from "./pages/Form";
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { createTheme } from '@mui/material/styles';
-
 const theme = createTheme({
+ 
   palette: {
     primary: {
       main: '#0052cc',
     },
     secondary: {
-      main: '#edf2ff',
+      main: '#6CB4EE',
     },
   },
+  
  
 });
 theme.typography.h3 = {
@@ -41,8 +41,21 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
   },
   title: {
-    flexGrow: 1,
+    
+    display: "flex",
+    alignItems:"center",
+    justifyContent: "space-between",
+    gap:"20px"
   },
+  header: {
+    backgroundColor: "#0076b9",
+ 
+  },
+  link: {
+    outline: "none",
+    textDecoration: "none",
+    color:"#fff"
+  }
 }));
 
 function App() {
@@ -52,15 +65,12 @@ function App() {
     <div className="App">
       <BrowserRouter>
         
-        <AppBar position="static">
+          <AppBar position="static" className={classes.header}>
           <Toolbar>
-            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-              {/* <MenuIcon /> */}
-            </IconButton>
             <Typography variant="h6" className={classes.title}>
-              <Link to='/'>Home</Link>
-              <Link to='/user'>User</Link>
-              <Link to='/admin'>Admin</Link>
+              <Link to='/' className={classes.link}>Signup</Link>
+                <Link to='/user' className={classes.link}>User</Link>
+                <Link to='/admin' className={classes.link}>Admin</Link>
             </Typography>
           </Toolbar>
           </AppBar>
@@ -69,7 +79,7 @@ function App() {
         </nav>
         <header className="App-header">
           <Routes>
-            <Route path='/' element={ <Home/>} />
+              <Route path='/' element={<Form />} />
             <Route path='/user' element={ <User/>} />
             <Route path='/admin' element={ <Admin/>} />
        </Routes>
