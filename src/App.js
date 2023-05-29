@@ -8,7 +8,7 @@ import Header from './components/Header';
 import theme from './utils/theme'
 import Footer from './components/Footer/Footer';
 import Searchbar from './components/Searchbar/Searchbar';
-
+import loader from "../src/images/loader.gif";
 
 
 function App() {
@@ -17,6 +17,9 @@ function App() {
     <ThemeProvider theme={theme}>
       <div className="App">
         <BrowserRouter>
+          <div className="loader-wrapper">
+            <img src={loader} alt="loader" />
+          </div>
           <Header />
           <Searchbar/>
           <Routes>
