@@ -1,0 +1,39 @@
+.navRight{
+      display: flex;
+      align-items:center;
+      justify-content:flex-end;
+     gap: 30px;
+}
+
+.logo{
+  margin-left: 24px;
+  max-width: 180px;
+}
+.header{
+  /* border-top: 10px solid #f14d54; */
+    background: #fff;
+    padding:14px 25px;
+    box-shadow: none;
+    max-width:1240px;
+    margin: 0 auto;
+  
+}
+.headerContainer{
+  display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.link {
+      outline: none;
+      text-decoration:none;
+      color: #f14d54;
+    }
+
+    .link:hover{
+      color: #000;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .headerWrapper{
+      border-top: 10px solid #f14d54;
+    }
