@@ -7,6 +7,7 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import Header from './components/Header';
 import theme from './utils/theme'
 import Footer from './components/Footer/Footer';
+import Searchbar from './components/Searchbar/Searchbar';
 
 
 
@@ -17,6 +18,7 @@ function App() {
       <div className="App">
         <BrowserRouter>
           <Header />
+          <Searchbar/>
           <Routes>
             <Route path='/' element={<Register />} />
             <Route path='/register' element={<Register />} />
