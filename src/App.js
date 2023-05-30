@@ -7,9 +7,9 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import Header from './components/Header';
 import theme from './utils/theme'
 import Footer from './components/Footer/Footer';
-import Searchbar from './components/Searchbar/Searchbar';
 import loader from "../src/images/loader.gif";
-
+import { AuthWrapper } from "./context/auth";
+import BookListing from './pages/BookListing';
 
 function App() {
 
@@ -17,17 +17,19 @@ function App() {
     <ThemeProvider theme={theme}>
       <div className="App">
         <BrowserRouter>
+          <AuthWrapper>
           <div className="loader-wrapper">
             <img src={loader} alt="loader" />
           </div>
           <Header />
-          <Searchbar/>
+          {/* <Searchbar/> */}
           <Routes>
-            <Route path='/' element={<Register />} />
+            <Route path='/' element={<BookListing />} />
             <Route path='/register' element={<Register />} />
             <Route path='/login' element={<Login />} />
           </Routes>
-          <Footer/>
+            <Footer />
+          </AuthWrapper>
         </BrowserRouter>
       </div>
     </ThemeProvider>
