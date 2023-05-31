@@ -48,7 +48,7 @@ const Header = () => {
           </div>
         </div>
       </AppBar>
-      {authContext.user.id && <Searchbar />}
+      {authContext.user.id ? <Searchbar />:<></>}
     </div>
   );
 };

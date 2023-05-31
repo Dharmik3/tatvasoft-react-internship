@@ -16,11 +16,18 @@ const search = async (query) => {
     });
 };
 
+const allBooks = async () => {
+    const url = `${API_URL}/all`;
+    return request.get(url).then((res) => {
+        return res;
+    });
+}
+
 
 
 const bookService = {
     search,
-    
+    allBooks
 };
 
 export default bookService;
