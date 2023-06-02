@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styles from './Book.module.css'
+import styles from "./Book.module.css";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -7,10 +7,8 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
-import { Button } from "@material-ui/core";
-import bookService from "../service/book-service";
+import { Button, Typography, TextField } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
-import { Typography, TextField } from "@material-ui/core";
 import categoryService from "../service/category-service";
 import ConfirmationDialog from "../components/ConfirmationDialog";
 import Shared from "../utils/shared";
@@ -18,15 +16,14 @@ import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 toast.configure();
 
-const Book = () => {
-
-     const defaultFilter = {
-       pageIndex: 1,
-       pageSize: 10,
-       keyword: "",
-     };
+const Category = () => {
+  const defaultFilter = {
+    pageIndex: 1,
+    pageSize: 10,
+    keyword: "",
+  };
   const [filters, setFilters] = useState(defaultFilter);
-  const [bookRecords, setBookRecords] = useState({
+  const [categoryRecords, setCategoryRecords] = useState({
     pageIndex: 0,
     pageSize: 10,
     totalPages: 1,
@@ -35,47 +32,29 @@ const Book = () => {
   });
   const [open, setOpen] = useState(false);
   const [selectedId, setSelectedId] = useState(0);
-  const [categories, setCategories] = useState([]);
 
   const navigate = useNavigate();
 
-
- const RecordsPerPage = [2, 5, 10, 100];
-  useEffect(() => {
-    getAllCategories();
-  }, []);
-
-  const getAllCategories = async () => {
-    await categoryService.getAll().then((res) => {
-      if (res) {
-        setCategories(res);
-      }
-    });
-  };
+  const RecordsPerPage = [2, 5, 10, 100];
 
   useEffect(() => {
     const timer = setTimeout(() => {
       if (filters.keyword === "") delete filters.keyword;
-      searchAllBooks({ ...filters });
+      searchAllCategories({ ...filters });
     }, 500);
     return () => clearTimeout(timer);
   }, [filters]);
-  
-  const columns = [
-    { id: "name", label: "Book Name", minWidth: 100 },
-    { id: "price", label: "Price", minWidth: 100 },
-    { id: "category", label: "Category", minWidth: 100 },
-  ];
-  const searchAllBooks = (filters) => {
-    bookService.allBooks(filters).then((res) => {
-      setBookRecords(res);
+
+  const columns = [{ id: "name", label: "Category Name", minWidth: 100 }];
+  const searchAllCategories = (filters) => {
+    categoryService.getAll(filters).then((res) => {
+      setCategoryRecords(res);
     });
   };
 
-
   const onConfirmDelete = () => {
-    bookService
-      .deleteBook(selectedId)
+    categoryService
+      .deleteCategory(selectedId)
       .then((res) => {
         toast.success(Shared.messages.DELETE_SUCCESS);
         setOpen(false);
@@ -88,7 +67,7 @@ const Book = () => {
     <div className={styles.productContainer}>
       <div className={styles.container}>
         <Typography variant="h3" className={styles.heading}>
-          Book Page
+          Category
         </Typography>
         <div className={styles.btnContainer}>
           <TextField
@@ -108,7 +87,7 @@ const Book = () => {
             variant="contained"
             color="secondary"
             disableElevation
-            onClick={() => navigate("/add-book")}
+            onClick={() => navigate("/add-category")}
             style={{ padding: "8px 30px", borderRadius: "1px" }}
           >
             Add
@@ -136,35 +115,30 @@ const Book = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {bookRecords.items.map((row, index) => (
+              {categoryRecords.items.map((row, index) => (
                 <TableRow key={row.id}>
                   <TableCell
                     style={{ borderBottom: "1px solid rgba(224, 224, 224, 1)" }}
                   >
                     {row.name}
                   </TableCell>
+
                   <TableCell
-                    style={{ borderBottom: "1px solid rgba(224, 224, 224, 1)" }}
-                  >
-                    {row.price}
-                  </TableCell>
-                  <TableCell
-                    style={{ borderBottom: "1px solid rgba(224, 224, 224, 1)" }}
-                  >
-                    {categories.find((c) => c.id === row.categoryId).name}
-                  </TableCell>
-                  <TableCell
-                    style={{ borderBottom: "1px solid rgba(224, 224, 224, 1)",textAlign:"right",padding:0 }}
+                    style={{
+                      borderBottom: "1px solid rgba(224, 224, 224, 1)",
+                      textAlign: "right",
+                      padding: 0,
+                    }}
                   >
                     <Button
                       type="button"
-                      style={{marginRight:"1rem",}}
+                      style={{ marginRight: "1rem" }}
                       className={`${styles.btn} ${styles.green}`}
                       variant="contained"
                       color="green"
                       disableElevation
                       onClick={() => {
-                        navigate(`/edit-book/${row.id}`);
+                        navigate(`/edit-category/${row.id}`);
                       }}
                     >
                       Edit
@@ -185,11 +159,11 @@ const Book = () => {
                   </TableCell>
                 </TableRow>
               ))}
-              {!bookRecords.items.length && (
+              {!categoryRecords.items.length && (
                 <TableRow className={styles.tableRow}>
-                  <TableCell colSpan={5} className={styles.tableCell}>
+                  <TableCell colSpan={6} className={styles.tableCell}>
                     <Typography align="center" className={styles.noData}>
-                      No Books
+                      No Category
                     </Typography>
                   </TableCell>
                 </TableRow>
@@ -200,7 +174,7 @@ const Book = () => {
         <TablePagination
           rowsPerPageOptions={RecordsPerPage}
           component="div"
-          count={bookRecords.totalItems}
+          count={categoryRecords.totalItems || 0}
           rowsPerPage={filters.pageSize || 10}
           page={filters.pageIndex - 1}
           onPageChange={(e, newPage) => {
@@ -218,12 +192,12 @@ const Book = () => {
           open={open}
           onClose={() => setOpen(false)}
           onConfirm={() => onConfirmDelete()}
-          title="Delete book"
-          description="Are you sure you want to delete this book?"
+          title="Delete Category"
+          description="Are you sure you want to delete this category?"
         />
       </div>
     </div>
   );
 };
 
-export default Book;
+export default Category;

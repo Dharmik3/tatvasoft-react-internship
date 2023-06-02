@@ -37,7 +37,8 @@ request.interceptors.response.use(
     console.log("responseeee,", response);
     removeRequest(response.config.url);
     if (data.code && data.code !== 200) {
-      toast.error(
+      console.log(response.data.error);
+      toast.error(response.data.error||
          "Somthing went wrong. Please try again!"
       );
       return Promise.reject(new Error(data.error || "Error"));
@@ -48,7 +49,7 @@ request.interceptors.response.use(
   },
   (error) => {
     removeRequest(error.config.url);
-    toast.error("Somthing went wrong");
+    toast.error(error.response.data.error||"Something went wrong");
     return Promise.reject(error);
   }
 );

@@ -49,18 +49,25 @@
 //     ORDER_SUCCESS: "Your order is successfully placed",
 // };
 
-
+const messages = {
+    USER_DELETE: "Are you sure you want to delete this user?",
+    UPDATED_SUCCESS: "Record updated successfully",
+    UPDATED_FAIL: "Record cannot be updated",
+    DELETE_SUCCESS: "Record deleted successfully",
+    DELETE_FAIL: "Record cannot be deleted",
+    ORDER_SUCCESS: "Your order is successfully placed",
+};
 
 const NavigationItems = [
     {
         name: "Users",
-        route: '/user',
-        access: [Role.Admin],
+        route: '/users',
+        access: [Role.Admin, Role.Seller],
     },
     {
         name: "Categories",
         route: '/category',
-        access: [Role.Admin],
+        access: [Role.Admin,Role.Seller],
     },
     {
         name: "Books",
@@ -91,6 +98,6 @@ const hasAccess = (pathname, user) => {
 export default {
     hasAccess,
     // addToCart,
-    // messages,
+    messages,
     NavigationItems,
 };

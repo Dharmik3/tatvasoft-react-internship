@@ -39,6 +39,7 @@ const Searchbar = () => {
         <div className={styles.searchContainer}>
           <div className={styles.serachField}>
             <TextField
+              size="small"
               id="searchText"
               name="searchText"
               placeholder="What are you looking for..."
@@ -63,7 +64,10 @@ const Searchbar = () => {
                                 <span className={styles.bookTitle}>
                                   {item.name}
                                 </span>
-                                <p>{item.description}</p>
+                                <p>
+                                  {item.description.slice(0, 40) +
+                                    (item.description.length > 40 ? "..." : "")}
+                                </p>
                               </div>
                               <div className={styles.bookRight}>
                                 <span className={styles.bookPrice}>

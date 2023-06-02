@@ -51,7 +51,7 @@ input{
     background-color: #fff;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
     border-radius: 5px;
-
+z-index: 10;
 }
 ul{
     list-style-type: none;
