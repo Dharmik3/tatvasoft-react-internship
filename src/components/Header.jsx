@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useMemo} from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import { Link } from "react-router-dom";
@@ -6,7 +6,8 @@ import styles from './Header.module.css'
 import logo from '../images/logo.svg'
 import Searchbar from "./Searchbar/Searchbar";
 import { useAuthContext } from "../context/auth";
-import { Button, List } from "@material-ui/core";
+import shared from "../utils/shared";
+// import { Button, List } from "@material-ui/core";
 
 const Header = () => {
   const authContext = useAuthContext();
@@ -14,7 +15,12 @@ const Header = () => {
      authContext.signOut();
    };
   
-  
+    const items = useMemo(() => {
+      return shared.NavigationItems.filter(
+        (item) =>
+          !item.access.length || item.access.includes(authContext.user.roleId)
+      );
+    }, [authContext.user]);
   return (
     <div className={styles.headerWrapper}>
       <AppBar
@@ -26,12 +32,24 @@ const Header = () => {
           <img src={logo} alt="logo" className={styles.logo} />
           <div className={styles.mainNavRight}>
             <Toolbar className={styles.navRight} color="secondary">
-              <Link to="/register" className={styles.link}>
-                Register
-              </Link>
-              <Link to="/login" className={styles.link}>
-                Login
-              </Link>
+              {!authContext.user.id ? (
+                <>
+                  <Link to="/register" className={styles.link}>
+                    Register
+                  </Link>
+                  <Link to="/login" className={styles.link}>
+                    Login
+                  </Link>
+                </>
+              ) : (
+                <></>
+              )}
+
+              {items.map((item, index) => (
+                <Link to={item.route} title={item.name} className={styles.link}>
+                  {item.name}
+                </Link>
+              ))}
             </Toolbar>
             {authContext.user.id ? (
               <button
@@ -48,7 +66,7 @@ const Header = () => {
           </div>
         </div>
       </AppBar>
-      {authContext.user.id ? <Searchbar />:<></>}
+      {authContext.user.id ? <Searchbar /> : <></>}
     </div>
   );
 };
