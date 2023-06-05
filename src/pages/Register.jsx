@@ -1,15 +1,15 @@
 import React from "react";
-import styles from './Register.module.css'
+import styles from "./Register.module.css";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import {Link} from "react-router-dom";
-import { Typography,Breadcrumbs } from "@material-ui/core";
+import { Link } from "react-router-dom";
+import { Typography, Breadcrumbs } from "@material-ui/core";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import Button from "@material-ui/core/Button";
-import authService from "../service/auth.service";
+import authService from "../service/auth-service";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
@@ -28,7 +28,7 @@ const roles = [
 
 // const form = (props) => {
 //   const {
-   
+
 //     values,
 //     touched,
 //     errors,
@@ -54,7 +54,6 @@ const roles = [
 //       <Typography variant="h3" className={styles.header}>
 //         Login or Create an Account
 //       </Typography>
-
 
 //       <form onSubmit={handleSubmit} className={styles.container}>
 //         <div className={styles.personalInfo}>
@@ -219,11 +218,9 @@ const roles = [
 
 // export default (Form);
 
-
 const Register = () => {
-
   const navigate = useNavigate();
-  
+
   const initialValues = {
     firstName: "",
     lastName: "",
@@ -232,22 +229,22 @@ const Register = () => {
     password: "",
     confirmPassword: "",
   };
-  
+
   const validationSchema = Yup.object().shape({
     firstName: Yup.string().required("Required"),
     lastName: Yup.string().required("Required"),
     email: Yup.string()
-    .email("Enter a valid email")
-    .required("Email is required"),
+      .email("Enter a valid email")
+      .required("Email is required"),
     roleId: Yup.number().required("Select your role"),
     password: Yup.string()
-    .min(6, "Password must contain at least 6 characters")
-    .required("Enter your password"),
+      .min(6, "Password must contain at least 6 characters")
+      .required("Enter your password"),
     confirmPassword: Yup.string()
-    .required("Confirm your password")
-    .oneOf([Yup.ref("password")], "Password does not match"),
+      .required("Confirm your password")
+      .oneOf([Yup.ref("password")], "Password does not match"),
   });
-  
+
   const onSubmit = (data) => {
     delete data.confirmPassword;
     console.log(data);
@@ -255,7 +252,7 @@ const Register = () => {
       console.log(res);
       if (!res.id) return;
       toast.success("Account created successfully!");
-      navigate('/login')
+      navigate("/login");
     });
   };
 
@@ -410,6 +407,6 @@ const Register = () => {
       </Formik>
     </div>
   );
-}
+};
 
-export default Register
+export default Register;

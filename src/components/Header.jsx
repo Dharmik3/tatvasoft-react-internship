@@ -1,26 +1,29 @@
-import React,{useMemo} from "react";
+import React, { useMemo } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import { Link } from "react-router-dom";
-import styles from './Header.module.css'
-import logo from '../images/logo.svg'
+import styles from "./Header.module.css";
+import logo from "../images/logo.svg";
 import Searchbar from "./Searchbar/Searchbar";
 import { useAuthContext } from "../context/auth";
 import shared from "../utils/shared";
+import cartIcon from "../images//cart.png";
+import { useCartContext } from "../context/cart";
 // import { Button, List } from "@material-ui/core";
 
 const Header = () => {
   const authContext = useAuthContext();
-   const logOut = () => {
-     authContext.signOut();
-   };
-  
-    const items = useMemo(() => {
-      return shared.NavigationItems.filter(
-        (item) =>
-          !item.access.length || item.access.includes(authContext.user.roleId)
-      );
-    }, [authContext.user]);
+  const cartContext = useCartContext();
+  const logOut = () => {
+    authContext.signOut();
+  };
+
+  const items = useMemo(() => {
+    return shared.NavigationItems.filter(
+      (item) =>
+        !item.access.length || item.access.includes(authContext.user.roleId)
+    );
+  }, [authContext.user]);
   return (
     <div className={styles.headerWrapper}>
       <AppBar
@@ -50,7 +53,22 @@ const Header = () => {
                   {item.name}
                 </Link>
               ))}
+              {authContext.user.id ? (
+                <Link
+                  to="/cart"
+                  variant="outlined"
+                  color="primary"
+                  className={styles.cart}
+                >
+                  <img src={cartIcon} alt="cart.png" />
+                  <span className={styles.cartNum}>{cartContext.cartData.length}</span>
+                  Cart
+                </Link>
+              ) : (
+                <></>
+              )}
             </Toolbar>
+
             {authContext.user.id ? (
               <button
                 onClick={logOut}

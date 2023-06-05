@@ -1,53 +1,27 @@
-
-
-
-//  const RoutePaths = {
-//     Login: "/login",
-//     Register: "/register",
-//     User: "/user",
-//     EditUser: "/edit-user/:id",
-//     Category: "/category",
-//     EditCategory: "/edit-category/:id",
-//     AddCategory: "/add-category",
-//     Book: "/book",
-//     EditBook: "/edit-book/:id",
-//     AddBook: "/add-book",
-//     BookListing: "/",
-//     Cart: "/Cart",
-//     UpdateProfile: "/update-profile",
-// };
-
+import cartService from "../service/cart-service";
  const Role = {
     Admin: 1,
     Seller: 2,
     Buyer: 3,
 };
 
-// const addToCart = async (book, id) => {
-//     return cartService
-//         .add({
-//             userId: id,
-//             bookId: book.id,
-//             quantity: 1,
-//         })
-//         .then((res) => {
-//             return { error: false, message: "Item added in cart" };
-//         })
-//         .catch((e) => {
-//             if (e.status === 500)
-//                 return { error: true, message: "Item already in the cart" };
-//             else return { error: true, message: "something went wrong" };
-//         });
-// };
+const addToCart = async (book, id) => {
+    return cartService
+        .add({
+            userId: id,
+            bookId: book.id,
+            quantity: 1,
+        })
+        .then((res) => {
+            return { error: false, message: "Item added in cart" };
+        })
+        .catch((e) => {
+            if (e.status === 500)
+                return { error: true, message: "Item already in the cart" };
+            else return { error: true, message: "something went wrong" };
+        });
+};
 
-// const messages = {
-//     USER_DELETE: "Are you sure you want to delete this user?",
-//     UPDATED_SUCCESS: "Record updated successfully",
-//     UPDATED_FAIL: "Record cannot be updated",
-//     DELETE_SUCCESS: "Record deleted successfully",
-//     DELETE_FAIL: "Record cannot be deleted",
-//     ORDER_SUCCESS: "Your order is successfully placed",
-// };
 
 const messages = {
     USER_DELETE: "Are you sure you want to delete this user?",
@@ -94,10 +68,10 @@ const hasAccess = (pathname, user) => {
     return true;
 };
 
-// eslint-disable-next-line import/no-anonymous-default-export
+
 export default {
     hasAccess,
-    // addToCart,
+    addToCart,
     messages,
     NavigationItems,
 };

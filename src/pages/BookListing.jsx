@@ -6,11 +6,15 @@ import {
   TextField,
   MenuItem,
   Select,
-
   Button,
-
 } from "@material-ui/core";
 import bookService from "../service/book-service";
+import Shared from "../utils/shared";
+import { useAuthContext } from "../context/auth";
+import { useCartContext } from "../context/cart";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+toast.configure();
 
 const BookListing = () => {
   const [books, setBooks] = useState([]);
@@ -27,21 +31,20 @@ const BookListing = () => {
     pageIndex: 1,
     keyword: "",
   });
-
+  const authContext = useAuthContext();
+  const cartContext = useCartContext();
   useEffect(() => {
-
-        if (filter.keyword === "") delete filter.keyword;
-        getAllBook({ ...filter });
-   
+    if (filter.keyword === "") delete filter.keyword;
+    getAllBook({ ...filter });
   }, [filter]);
 
   const getAllBook = (filter) => {
     bookService.allBooks(filter).then((res) => {
-      console.log(res)
-      setBooksRes(res)
-       setBooks(res.items);
-     });
-  }
+      console.log(res);
+      setBooksRes(res);
+      setBooks(res.items);
+    });
+  };
   useEffect(() => {}, [sortBy]);
 
   const sortBooks = (e) => {
@@ -59,6 +62,18 @@ const BookListing = () => {
     });
     setBooks(bookList);
   };
+
+  const addToCart = (book) => {
+    Shared.addToCart(book, authContext.user.id).then((res) => {
+      if (res.error) {
+        toast.error(res.message);
+      } else {
+        toast.success(res.message);
+        cartContext.updateCart();
+      }
+    });
+  };
+
   return (
     <div className={styles.container}>
       <Typography variant="h3" className={styles.heading}>
@@ -126,6 +141,7 @@ const BookListing = () => {
                 MRP &#8377; <span>{book.price}</span>
               </p>
               <Button
+                onClick={()=>{addToCart(book)}}
                 className={styles.btn}
                 type="submit"
                 color="secondary"

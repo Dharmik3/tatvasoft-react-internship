@@ -20,7 +20,7 @@ theme.typography.h3 = {
     },
     [theme.breakpoints.up('md')]: {
         fontSize: '2.4rem',
-    },
+    }, 
     
 }
 export default theme
