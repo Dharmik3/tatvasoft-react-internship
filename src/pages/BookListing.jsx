@@ -40,7 +40,7 @@ const BookListing = () => {
 
   const getAllBook = (filter) => {
     bookService.allBooks(filter).then((res) => {
-      console.log(res);
+   
       setBooksRes(res);
       setBooks(res.items);
     });

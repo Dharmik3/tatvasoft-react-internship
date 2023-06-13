@@ -43,11 +43,11 @@ const Login = () => {
   });
 
   const onSubmit = (data) => {
-    console.log(data);
+   
     authService.login(data).then((res) => {
       if (!res.id) return;
       authContext.setUser(res);
-      console.log(res);
+     
       toast.success("Loggedin successfully!");
       navigate("/");
     });

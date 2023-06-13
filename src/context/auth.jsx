@@ -33,7 +33,7 @@ export const AuthWrapper = ({ children }) => {
   const { pathname } = useLocation();
 
   const setUser = (user) => {
-    console.log(user);
+   
     localStorage.setItem('user', JSON.stringify(user));
     _setUser(user);
   };

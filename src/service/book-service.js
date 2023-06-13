@@ -14,7 +14,7 @@ const search = async (query) => {
 
 const allBooks = async (filter) => {
     // book ? pageSize = 1 & pageIndex=0 & keyword=dog
-    console.log('keyword' in filter)
+   
     let url;
     if ('keyword' in filter) {
         url = `${API_URL}?pageSize=${filter.pageSize}&pageIndex=${filter.pageIndex}&keyword=${filter.keyword}`;

@@ -31,7 +31,7 @@ const Searchbar = () => {
     //   if (element.classList.contains("bookListNone"))
     //     element.classList.remove("bookListNone");
  
-    console.log(res);
+   
   };
 
   const addToCart = (book) => {

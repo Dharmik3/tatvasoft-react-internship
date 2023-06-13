@@ -34,10 +34,10 @@ request.interceptors.request.use(
 request.interceptors.response.use(
   (response) => {
     const { data } = response;
-    console.log("responseeee,", response);
+ 
     removeRequest(response.config.url);
     if (data.code && data.code !== 200) {
-      console.log(response.data.error);
+   
       toast.error(response.data.error||
          "Somthing went wrong. Please try again!"
       );

@@ -247,9 +247,9 @@ const Register = () => {
 
   const onSubmit = (data) => {
     delete data.confirmPassword;
-    console.log(data);
+  
     authService.create(data).then((res) => {
-      console.log(res);
+     
       if (!res.id) return;
       toast.success("Account created successfully!");
       navigate("/login");
